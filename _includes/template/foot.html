@@ -1,8 +1,0 @@
-<!-- Bootstrap JS bundle -->
-<script src="{{ '/assets/lib/bootstrap.bundle.min.js' | relative_url }}"></script>
-<!-- load other optional js -->
-{% if page.foot %}{% include {{ page.foot }} %}{% endif %}
-{% if layout.foot %}{% include {{ layout.foot }} %}{% endif %}
-{% if layout.gallery == true or page.gallery == true %}<script src="{{ '/assets/lib/lazysizes.min.js' | relative_url }}" async></script>
-<script src="{{ '/assets/lib/spotlight.min.js' | relative_url }}" defer></script>{% endif %}
-{% include template/scroll-to-top.html %}
