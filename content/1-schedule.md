@@ -23,10 +23,10 @@ The tutorial will be hosted in the afternoon session on Saturday, October 1, 202
 | 2:00 PM | Running an RTL design through OpenROAD-flow-Scripts         | TBD       |
 | 2:20 PM | Debugging Common Design Problems                            | TBD       |
 | 2:40 PM | Analyzing your design using OpenROAD                        | TBD       |
-| 3:00 PM | Building Complex Designs                                    | TBD       |
-| 3:20 PM | Limitations of OpenROAD                                     | TBD       |
-| 3:30 PM | *Break*                                                     |           |
+| 3:00 PM | *Break*                                                     |           |
 |---------|-------------------------------------------------------------|-----------|
+| 3:30 PM | Building Complex Designs                                    | TBD       |
+| 3:50 PM | Limitations of OpenROAD                                     | TBD       |
 | 4:00 PM | Setting Up a New Design with OpenROAD-flow-Scripts          | TBD       |
 | 4:20 PM | Using OpenLane for the free Skywater 130nm Open MPW Shuttle | TBD       |
 | 4:40 PM | Hands-on debugging support / Q&A *(bring your own design!)* | TBD       |
