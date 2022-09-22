@@ -4,7 +4,7 @@ nav: Resources
 ---
 
 ## Tutorial Resources
-* [Tutorial repository]() (contains everything needed for this tutorial)
+* [Tutorial repository](https://github.com/The-OpenROAD-Project/micro2022tutorial) (contains everything needed for this tutorial)
 
 ## Tool Repositories
 * [OpenROAD-flow-scripts](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts) (flow)

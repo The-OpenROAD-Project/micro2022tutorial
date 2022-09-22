@@ -33,7 +33,7 @@ github_username: rovinski
 # year or date published
 pub_year: 2022
 # location of code, the full url to your github repository
-source-code: https://github.com/rovinski/micro2022workshop
+source-code: https://github.com/The-OpenROAD-Project/micro2022tutorial
 
 ##########
 # URL VARIABLES [optional!]

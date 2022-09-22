@@ -10,7 +10,7 @@ Please bring a laptop with:
 * 1 CPU core (4 recommended)
 * 4 GB of RAM (16 recommended)
 * 10 GB of free hard disk space (15 recommended)
-* Installation of the tutorial repository
+* Installation of the [tutorial repository](https://github.com/The-OpenROAD-Project/micro2022tutorial)
   * Installation on your native machine *or*
   * Installation in a Docker container *or*
   * Installation of a virtual machine
@@ -29,6 +29,13 @@ support for Ubuntu 20 and Centos 7.
 
 This method will build OpenROAD-flow-scripts components (OpenROAD and Yosys) from source. Package managers are used to
 install (most) dependencies.
+
+### Download the Repository
+
+```
+$ git clone --recursive https://github.com/The-OpenROAD-Project/micro2022tutorial
+```
+Cloning recursively is important to download and initialize all git submodules.
 
 #### Install Dependencies
 

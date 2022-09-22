@@ -9,7 +9,8 @@ layout: default
 
 {% include alert.html text="The tutorial will be hosted from 1 - 5 PM CST in [Room TBD] on Saturday, October 1, 2022." align="center" color="success" %}
 
-{% include alert.html text="Be sure to install and test the tutorial repo before arriving! See [Workshop Prep](./content/0-prep.html)." align="center" color="warning" %}
+{% include alert.html text="Be sure to install and test the [tutorial repo](https://github.com/The-OpenROAD-Project/micro2022tutorial)
+before arriving! See [Workshop Prep](./content/0-prep.html)." align="center" color="warning" %}
 
 ## Introduction
 
