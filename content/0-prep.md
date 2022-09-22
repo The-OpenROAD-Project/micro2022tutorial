@@ -57,6 +57,7 @@ Then, install additional dependencies for OpenROAD-flow-scripts:
 brew install pkg-config libffi
 brew install klayout
 ```
+The OS may identify KLayout as an untrusted app - you will need to mark it as trusted in order to run it.
 "
 
 title3="Linux"
