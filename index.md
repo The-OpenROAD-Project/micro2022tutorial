@@ -49,7 +49,7 @@ In this tutorial, we will present:
 * What is OpenROAD's roadmap?
 * How can I contribute to OpenROAD?
 
-For a more detailed overview, please see the [schedule](./content/1-schedule.html).
+For a more detailed overview, please see the [program](./content/1-program.html).
 
 ## What's Not Covered
 

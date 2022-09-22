@@ -1,6 +1,6 @@
 ---
-title: Tutorial Schedule (tentative)
-nav: Schedule
+title: Tutorial Program (tentative)
+nav: Program
 ---
 
 ## Location
@@ -8,7 +8,7 @@ nav: Schedule
 This tutorial is hosted at the 55th IEEE/ACM International Symposium on Microarchitecture (MICRO 2022) at [The Westin Chicago River North Hotel](https://www.marriott.com/en-us/hotels/chino-the-westin-chicago-river-north/) in Chicago, IL, USA.<br/>
 Room TBD.
 
-## Schedule
+## Program
 
 The tutorial will be hosted in the afternoon session on Saturday, October 1, 2022.<br/>
 *All times are listed in CST*.
