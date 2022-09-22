@@ -161,36 +161,131 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
 ## Exercise 1: Debugging a design #1
 Find the problem with the provided design.
 
-`exercise1/ibex.mk` provides a faulty design config. Find the error by running `make DESIGN_CONFIG=exercise1/ibex.mk`
+`exercise1/config.mk` provides a faulty design config for the design `dynamic_node` (mesh router node). Find the error by running:
+```
+$ make DESIGN_CONFIG=exercise1/config.mk
+```
 
-Once the error is spotted, open `exercise1/ibex.mk` in a text editor and fix the problematic line.
+Once the error is spotted, open `exercise1/config.mk` in a text editor and fix the problematic line(s).
 You can test your solution by cleaning and rerunning the design:
 ```
-make DESIGN_CONFIG=exercise1/ibex.mk clean_all
-make DESIGN_CONFIG=exercise1/ibex.mk
+# Save time by only cleaning the floorplan step to avoid rerunning synthesis
+make DESIGN_CONFIG=exercise1/config.mk clean_floorplan
+make DESIGN_CONFIG=exercise1/config.mk
 ```
 
-Compare your solution to the reference solution at `exercise1/solution/ibex.mk`
+Compare your solution to the reference solution at `exercise1/solution/config.mk`.
 
 ## Exercise 2: Debugging a design #2
 Find the problem with the provided design.
 
-`exercise2/ibex.mk` provides a faulty design config. Find the error by running `make DESIGN_CONFIG=exercise2/ibex.mk`
+`exercise2/config.mk` provides a faulty design config. Find the error by running:
+```
+make DESIGN_CONFIG=exercise2/config.mk
+```
 
-Once the error is spotted, open `exercise2/ibex.mk` in a text editor and fix the problematic line.
+Once the error is spotted, open `exercise2/config.mk` in a text editor and fix the problematic line.
 You can test your solution by cleaning and rerunning the design:
 ```
+# Save time by only cleaning the floorplan step to avoid rerunning synthesis
 make DESIGN_CONFIG=exercise2/ibex.mk clean_all
 make DESIGN_CONFIG=exercise2/ibex.mk
 ```
 
-Compare your solution to the reference solution at `exercise2/solution/ibex.mk`
+Compare your solution to the reference solution at `exercise2/solution/config.mk`
 
 ## Demo 2: Analyzing your design using OpenROAD
 Follow along as the presenter demonstrates how to observe design metrics.
 
 ## Exercise 3: Creating a pareto curve
 Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
+
+`exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
+and the default clock constraint is 5ns (200 MHz). These parameters allow for RTL-to-GDS in
+under 1 minute. Run the design with:
+```
+make DESIGN_CONFIG=exercise3/config.mk
+```
+
+Once complete, observe the final report by navigating to `logs/nangate45/alu/base/6_report.json`
+for a simple JSON-based report or `logs/nangate45/alu/base/6_report.log` for a textual report.
+
+### Modeling Power
+To observe the modeled power, look at `finish__power__total` or `finish report_power`. Note that
+OpenROAD models power using default activity factors on inputs and propagates these activity factors
+through the design. This method provides a solid first-order approximation of power and is useful
+for design space exploration. You can increase the accuracy of the model by applying accurate
+activity factors on the inputs (see OpenSTA documentation). Static activity-based power modeling
+(SAIF) and vector-based (VPD) power modeling are even more accurate methods, however they are not
+currently supported in OpenROAD.
+
+OpenROAD power report:
+```
+==========================================================================
+finish report_power
+--------------------------------------------------------------------------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             4.49e-04   6.01e-05   3.13e-06   5.12e-04  38.6%
+Combinational          4.08e-04   3.96e-04   9.84e-06   8.14e-04  61.4%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  8.57e-04   4.56e-04   1.30e-05   1.33e-03 100.0%
+                          64.7%      34.4%       1.0%
+```
+Total power is the most important metric, however you can read more about the other components
+[here](https://blogs.cuit.columbia.edu/zp2130/modeling_power_terminology). The power report is
+broken down by class, where `Sequential` represents flip-flops, `Combinational` represents logic
+gates, `Macro` represents macros such as SRAM, and `Pad` represents I/O cells (if any).
+
+### Calculating Max Frequency
+To determine maximum frequency, look at `finish__timing__setup__ws` or `finish report_worst_slack`
+value. "Slack" is the difference between the constraint (0.46ns) and the actual time. Positive slack means
+the constraint is met ("there is extra slack"). Negative slack means the constraint is violated.
+
+```
+==========================================================================
+finish report_worst_slack
+--------------------------------------------------------------------------
+worst slack -0.08
+```
+
+Using the slack, the frequency is calculated as:
+$$\mathrm{Frequency_max} = \frac{1}{\mathrm{constraint} - \mathrm{slack}}$$
+Be mindful of the sign and units of the slack. Greater slack should mean greater frequency.
+
+In this case, the max frequency is:
+$$\mathrm{Frequency_max} = \frac{1}{\mathrm{constraint} - \mathrm{slack}} = \frac{1}{0.46\mathrm{ns} - (-0.08\mathrm{ns})} \approx 1.85 \mathrm{GHz} $$
+
+### Measuring Area
+To measure the design area, you must be aware of the different types of reported area.
+1. Synthesized area
+2. Place-and-route area
+3. Die area
+
+Synthesized area is obtained after synthesis and is a good first-order model for design space exploration.
+You can find the design area in `logs/nangate45/gcd/base/synth_stat.txt`. Units are $\mathrm{\mu m}^2$.
+
+```
+Chip area for module '\gcd': 519.764000
+```
+
+Place-and-route area is the area obtained after cell placement and routing. If reporting this number, it
+is implied that the design does not have any violatiions which make the chip unmanufacturable (e.g.
+routing or hold time violations). You can find the area from `finish__design__instance__area` or
+`finish report_design_area`.
+
+```
+==========================================================================
+finish report_design_area
+--------------------------------------------------------------------------
+Design area 581 u^2 24% utilization.
+```
+
+Die area is the most accurate number, as it is the exact amount of silicon that will be used for
+fabrication.
 
 ## Exercise 4: Scaling a design across technologies
 Observe the differences when a design is implemented in different technologies.
