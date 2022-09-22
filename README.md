@@ -95,17 +95,109 @@ cp results/nangate45/gcd/base/6_1_merged.gds results/nangate45/gcd/base/6_final.
 
 If you see that the GDS file is written out, congratulations! You have successfully installed the flow.
 
-# Exercises
+# Demos and Exercises
 
-## Exercise 1: Running an RTL design through OpenROAD-flow-Scripts
+## Demo 1: Running the flow
+
+Follow along as the presenter explains each step / sub-step of the flow (click to expand each section).
+
+### Synthesis
+1. Perform file preprocessing (mainly for yosys)
+   ```
+   ./util/markDontUse.py 
+   Marked 4 cells as dont_use
+   Commented 0 lines containing "original_pin"
+   Replaced malformed functions 0
+   Writing replaced file: objects/nangate45/gcd/base/lib/NangateOpenCellLibrary_typical.lib
+   ```
+2. Parse input files
+   ```
+   1. Executing Verilog-2005 frontend: ./designs/src/gcd/gcd.v
+   2. Executing Liberty frontend.
+   3. Executing Verilog-2005 frontend: ./platforms/nangate45/cells_clkgate.v
+   ```
+3. Elaborate the design
+   ```
+   4.1 Executing HIERARCHY pass (managing design hierarchy).
+   4.2 Executing AST frontend in derive mose using pre-parses AST for module `\gcd'.
+   # ...
+   4.3. Executing PROC pass (convert processes to netlists)
+   # ...
+   ```
+4. Optimize the netlist
+   ```
+   4.4. Executing FLATTEN pass (flatten design).
+   4.5. Executing OPT_EXPR pass (perform const folding).
+   4.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+   4.7. Executing CHECK pass (checking for obvious problems).
+   4.8. Executing OPT pass (perform simple optimizations).
+   # ...
+   ```
+5. Map the generic netlist cells to technology specific cells
+   ```
+   4.22. Executing TECHMAP pass (map to technology primitives).
+   # ...
+   6. Executing TECHMAP pass (map to technology primitives).
+   # ...
+   9. Executing ABC pass (technology mapping using ABC).
+   ```
+6. Generate Verilog netlist
+   ```
+   17. Executing Verilog backend.
+   ```
+   
+### Floorplanning
+
+### Global Placement
+### Detailed Placement
+### Clock Tree Synthesis
+### Global Routing
+### Detailed Routing
+### Parasitic Extraction
+### Timing Signoff
+### GDS Export
+
+
+## Exercise 1: Debugging a design #1
+Find the problem with the provided design.
+
+`exercise1/ibex.mk` provides a faulty design config. Find the error by running `make DESIGN_CONFIG=exercise1/ibex.mk`
+
+Once the error is spotted, open `exercise1/ibex.mk` in a text editor and fix the problematic line.
+You can test your solution by cleaning and rerunning the design:
+```
+make DESIGN_CONFIG=exercise1/ibex.mk clean_all
+make DESIGN_CONFIG=exercise1/ibex.mk
+```
+
+Compare your solution to the reference solution at `exercise1/solution/ibex.mk`
+
+## Exercise 2: Debugging a design #2
+Find the problem with the provided design.
+
+`exercise2/ibex.mk` provides a faulty design config. Find the error by running `make DESIGN_CONFIG=exercise2/ibex.mk`
+
+Once the error is spotted, open `exercise2/ibex.mk` in a text editor and fix the problematic line.
+You can test your solution by cleaning and rerunning the design:
+```
+make DESIGN_CONFIG=exercise2/ibex.mk clean_all
+make DESIGN_CONFIG=exercise2/ibex.mk
+```
+
+Compare your solution to the reference solution at `exercise2/solution/ibex.mk`
+
+## Demo 2: Analyzing your design using OpenROAD
+Follow along as the presenter demonstrates how to observe design metrics.
+
+## Exercise 3: Creating a pareto curve
+Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
+
+## Exercise 4: Scaling a design across technologies
+Observe the differences when a design is implemented in different technologies.
+
+## Demo 3: Building Complex Designs
 TODO
-## Exercise 2: Running an RTL design through OpenROAD-flow-Scripts
+## Exercise 5: Setting Up a New Design with OpenROAD-flow-Scripts
 TODO
-## Exercise 2: Analyzing your design using OpenROAD
-TODO
-## Exercise 3: Building Complex Designs
-TODO
-## Exercise 4: Setting Up a New Design with OpenROAD-flow-Scripts
-TODO
-## Exercise 5: Using OpenLane for the free Skywater 130nm Open MPW Shuttle
+## Exercise 6: Using OpenLane for the free Skywater 130nm Open MPW Shuttle
 TODO
