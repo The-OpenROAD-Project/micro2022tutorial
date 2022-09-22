@@ -47,18 +47,15 @@ and following the instructions for Linux.
 Alternatively, you can install [Docker for Windows](https://docs.docker.com/desktop/install/windows-install/) and follow the instructions for Docker."
 
 title2="MacOS" 
-text2="see OpenROAD/.github/workflows/github-actions-macos.yml
+text2="OpenROAD has preliminary support for MacOS. You can use the OpenROAD dependency installer script:
 
 ```
-# Install brew dependencies
-brew install bison boost eigen flex libomp pyqt5 python spdlog swig tcl-tk zlib
-
-# Install lemon from source
-wget http://lemon.cs.elte.hu/pub/sources/lemon-1.3.1.tar.gz
-tar -xf lemon-1.3.1.tar.gz
-cd lemon-1.3.1
-cmake -B build .
-cmake --build build -j --target install
+micro2022tutorial/OpenROAD-flow-scripts/OpenROAD/etc/DependencyInstaller.sh
+```
+Then, install additional dependencies for OpenROAD-flow-scripts:
+```
+brew install pkg-config libffi
+brew install klayout
 ```
 "
 
@@ -70,6 +67,8 @@ micro2022tutorial/OpenROAD-flow-scripts/OpenROAD/etc/DependencyInstaller.sh
 ```
 Using a different distribution is not recommended, however you may view the script and identify how to manually install
 the required packages for your distribution.
+
+KLayout must be installed separately. See the [KLayout download page](https://www.klayout.de/build.html) to install it for your distribution.
 "
 %}
 
