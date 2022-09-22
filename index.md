@@ -5,9 +5,11 @@ layout: default
 
 # OpenROAD tutorial: Open-Source ASIC Design for Computer Architects
 
-{% include figure.html img="ibexGui.webp" alt="Ibex RISC-V core" caption="OpenROAD implementation of a RISC-V Ibex core" width="80%" %}
+{% include figure.html img="ibexGui.webp" alt="Ibex RISC-V core" caption="OpenROAD implementation of a RISC-V Ibex core"
+width="80%" %}
 
-{% include alert.html text="The tutorial will be hosted from 1 - 5 PM CST in [Room TBD] on Saturday, October 1, 2022." align="center" color="success" %}
+{% include alert.html text="The tutorial will be hosted from 1 - 5 PM CST in [Room TBD] on Saturday, October 1, 2022."
+align="center" color="success" %}
 
 {% include alert.html text="Be sure to install and test the [tutorial repo](https://github.com/The-OpenROAD-Project/micro2022tutorial)
 before arriving! See [Workshop Prep](./content/0-prep.html)." align="center" color="warning" %}
@@ -51,7 +53,8 @@ For a more detailed overview, please see the [schedule](./content/1-schedule.htm
 
 ## What's Not Covered
 
-This tutorial is intended to introduce ASIC implementation to those already conceptually familiar with RTL design (undergraduate level or equivalent). We do not cover RTL design techniques or RTL validation.
+This tutorial is intended to introduce ASIC implementation to those already conceptually familiar with RTL design
+(undergraduate level or equivalent). We do not cover RTL design techniques or RTL validation.
 
 ------
 
