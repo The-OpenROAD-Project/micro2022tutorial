@@ -78,7 +78,7 @@ Run the install script. This step may take up to an hour, depending on your inte
 ```
 # This script uses all available cores to build. Use --threads N to use N threads
 # Use --help to see all build options
-micro2022tutorial/OpenROAD-flow-scripts/build_openroad.sh
+$ micro2022tutorial/OpenROAD-flow-scripts/build_openroad.sh
 ```
 
 ### Method 2: Install from Docker
@@ -104,8 +104,9 @@ Virtual machine images will be provided at the tutorial via USB 2.0 drives.
 
 To quickly verify that your installation is correct, run
 ```
-cd micro2022tutorial/OpenROAD-flow-scripts/flow
-make
+$ cd micro2022tutorial/OpenROAD-flow-scripts/flow
+$ source ../setup_env.sh
+$ make
 ```
 If the flow completes without error, congrats! The flow was installed successfully.
 
