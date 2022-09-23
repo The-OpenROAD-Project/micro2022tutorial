@@ -794,6 +794,17 @@ Common problems when introducing macros:
 * Malformed macros can cause difficult-to-diagnose design problems
 
 ## Exercise 5: Setting Up a New Design with OpenROAD-flow-Scripts
-TODO
-## Exercise 6: Using OpenLane for the free Skywater 130nm Open MPW Shuttle
-TODO
+If you have your own RTL, now's the time to use it!
+
+The directory `../exercise5/` contains a blank `config.mk` template and blank `constraint.sdc`
+template.
+
+* If you have Verilog RTL file(s), place it (them) in `../exercise5/`.
+* If you don't have your own RTL, you can use the provided `counter.v` file instead.
+
+Feel free to use other designs as a reference! Use any platform you want.
+
+## Demo 4: Using OpenLane for the free Skywater 130nm Open MPW Shuttle
+Follow along as the presenter explains [OpenLane](https://github.com/The-OpenROAD-Project/OpenLane),
+the [Efabless OpenMPW Program](https://efabless.com/open_shuttle_program), and a [design which was
+just submitted](https://platform.efabless.com/projects/1165).
