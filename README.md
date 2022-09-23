@@ -686,25 +686,25 @@ $$\mathrm{Area_{core}} = \frac{\mathrm{Area_design}}{\mathrm{utilization}} = \fr
 Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
 
 `exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
-and the default clock constraint is 5ns (200 MHz). These parameters allow for RTL-to-GDS in
+and the default clock constraint is 7ns (~143 MHz). These parameters allow for RTL-to-GDS in
 under 1 minute. Run the design with:
 ```
-make DESIGN_CONFIG=exercise3/config.mk
+make DESIGN_CONFIG=../../exercise3/config.mk
 ```
 
 Once complete, observe the final report at `logs/nangate45/alu/base/6_report.json` or
 `logs/nangate45/alu/base/6_report.log`.
 
 Record the power, frequency, and area. Then, open the constraint file with your favorite editor
-and adjust the clock period to 4ns.
+and adjust the clock period to 6ns.
 
 Clean the design and rerun using the new constraint:
 ```
-make DESIGN_CONFIG=../exercise3/config.mk clean_all
-make DESIGN_CONFIG=../exercise3/config.mk
+make DESIGN_CONFIG=../../exercise3/config.mk clean_all
+make DESIGN_CONFIG=../../exercise3/config.mk
 ```
 
-Record the power, frequency, and area, then repeat for 3ns and 2ns.
+Record the power, frequency, and area, then repeat for 5ns and 4ns.
 
 Once complete, you can plot this data using your favorite software (Google Sheets, Microsoft
 Excel, matplotlib, etc.). Use frequency as the independent variable. Confirm that your data
