@@ -171,6 +171,10 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
    ```
    [INFO PDN-0001] Inserting grid: grid
    ```
+See this step in the GUI:
+```
+$ make gui_floorplan
+```
 </details>
 
 <details>
@@ -236,6 +240,10 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
    [INFO DPL-0022] HPWL after             2700.8 u
    [INFO DPL-0023] HPWL delta               -0.1 %
    ```
+See this step in the GUI:
+```
+$ make gui_place
+```
 </details>
 
 <details>
@@ -296,6 +304,10 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
    ```
    [INFO DPL-0001] Placed 704 filler instances.
    ```
+See this step in the GUI:
+```
+$ make gui_cts
+```
 </details>
    
 <details>
@@ -406,6 +418,10 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
    [INFO DRT-0198] Complete detail routing.
    Total wire length = 3573 um.
    ```
+See this step in the GUI:
+```
+$ make gui_route
+```
 </details>
 
 <details>
@@ -479,7 +495,10 @@ Extract parasitic capacitances and resistances
    --------------------------------------------------------------------------
    hold violation count 1
    ```
-
+See this step in the GUI:
+```
+$ make gui_finish
+```
 </details>
 
 <details>
@@ -499,6 +518,11 @@ WARNING: no fill config file specified
 [INFO] Checking for orphan cell in the final layout...
 [INFO] No orphan cells
 [INFO] Writing out GDS/OAS 'results/nangate45/gcd/base/6_1_merged.gds'
+```
+
+See this step in the GUI:
+```
+$ make klayout_6_final.gds
 ```
 </details>
 
