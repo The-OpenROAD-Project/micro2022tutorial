@@ -96,6 +96,8 @@ cp results/nangate45/gcd/base/6_1_merged.gds results/nangate45/gcd/base/6_final.
 If you see that the GDS file is written out, congratulations! You have successfully installed the flow.
 
 # Demos and Exercises
+:exclamation: All demos and exercises must be performed with your current directory as
+`micro2022tutorial/OpenROAD-flow-scripts/flow`.
 
 ## Demo 1: Running the flow
 
@@ -529,38 +531,44 @@ $ make klayout_6_final.gds
 ## Exercise 1: Debugging a design #1
 Find the problem with the provided design.
 
-`exercise1/config.mk` provides a faulty design config for the design `dynamic_node` (mesh router node). Find the error by running:
+[`../../exercise1/config.mk`](exercise1/config.mk) provides a faulty design
+config for the design `dynamic_node`, which is a (mesh router node). Find the
+error by running:
 ```
-$ make DESIGN_CONFIG=exercise1/config.mk
+$ make DESIGN_CONFIG=../../exercise1/config.mk
 ```
 
-Once the error is spotted, open `exercise1/config.mk` in a text editor and fix the problematic line(s).
-You can test your solution by cleaning and rerunning the design:
+Once the error is spotted, open `../../exercise1/config.mk` in a text editor and
+fix the problematic line(s). You can test your solution by cleaning and
+rerunning the design:
 ```
 # Save time by only cleaning the floorplan step to avoid rerunning synthesis
-make DESIGN_CONFIG=exercise1/config.mk clean_floorplan
-make DESIGN_CONFIG=exercise1/config.mk
+make DESIGN_CONFIG=../../exercise1/config.mk clean_floorplan
+make DESIGN_CONFIG=../../exercise1/config.mk
 ```
 
-Compare your solution to the reference solution at `exercise1/solution/config.mk`.
+Compare your solution to the reference solution at
+[`../../exercise1/solution/config.mk`](exercise1/solution/config.mk).
 
 ## Exercise 2: Debugging a design #2
 Find the problem with the provided design.
 
-`exercise2/config.mk` provides a faulty design config. Find the error by running:
+[`../../exercise2/config.mk`](exercise2/config.mk) provides a faulty design config.
+Find the error by running:
 ```
-make DESIGN_CONFIG=exercise2/config.mk
+make DESIGN_CONFIG=../../exercise2/config.mk
 ```
 
-Once the error is spotted, open `exercise2/config.mk` in a text editor and fix the problematic line.
-You can test your solution by cleaning and rerunning the design:
+Once the error is spotted, open `../../exercise2/config.mk` in a text editor and fix
+the problematic line. You can test your solution by cleaning and rerunning the design:
 ```
 # Save time by only cleaning the floorplan step to avoid rerunning synthesis
-make DESIGN_CONFIG=exercise2/ibex.mk clean_all
-make DESIGN_CONFIG=exercise2/ibex.mk
+make DESIGN_CONFIG=../../exercise2/config.mk clean_floorplan
+make DESIGN_CONFIG=../../exercise2/config.mk
 ```
 
-Compare your solution to the reference solution at `exercise2/solution/config.mk`
+Compare your solution to the reference solution at
+[`../../exercise2/solution/config.mk`](exercise2/solution/config.mk).
 
 
 
@@ -680,25 +688,25 @@ $$\mathrm{Area_{core}} = \frac{\mathrm{Area_design}}{\mathrm{utilization}} = \fr
 Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
 
 `exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
-and the default clock constraint is 5ns (200 MHz). These parameters allow for RTL-to-GDS in
+and the default clock constraint is 7ns (~143 MHz). These parameters allow for RTL-to-GDS in
 under 1 minute. Run the design with:
 ```
-make DESIGN_CONFIG=exercise3/config.mk
+make DESIGN_CONFIG=../../exercise3/config.mk
 ```
 
 Once complete, observe the final report at `logs/nangate45/alu/base/6_report.json` or
 `logs/nangate45/alu/base/6_report.log`.
 
 Record the power, frequency, and area. Then, open the constraint file with your favorite editor
-and adjust the clock period to 4ns.
+and adjust the clock period to 6ns.
 
 Clean the design and rerun using the new constraint:
 ```
-make DESIGN_CONFIG=../exercise3/config.mk clean_all
-make DESIGN_CONFIG=../exercise3/config.mk
+make DESIGN_CONFIG=../../exercise3/config.mk clean_all
+make DESIGN_CONFIG=../../exercise3/config.mk
 ```
 
-Record the power, frequency, and area, then repeat for 3ns and 2ns.
+Record the power, frequency, and area, then repeat for 5ns and 4ns.
 
 Once complete, you can plot this data using your favorite software (Google Sheets, Microsoft
 Excel, matplotlib, etc.). Use frequency as the independent variable. Confirm that your data
