@@ -157,7 +157,6 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
 ### Timing Signoff
 ### GDS Export
 
-
 ## Exercise 1: Debugging a design #1
 Find the problem with the provided design.
 
@@ -194,18 +193,13 @@ make DESIGN_CONFIG=exercise2/ibex.mk
 
 Compare your solution to the reference solution at `exercise2/solution/config.mk`
 
+
+
 ## Demo 2: Analyzing your design using OpenROAD
 Follow along as the presenter demonstrates how to observe design metrics.
 
-## Exercise 3: Creating a pareto curve
-Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
-
-`exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
-and the default clock constraint is 5ns (200 MHz). These parameters allow for RTL-to-GDS in
-under 1 minute. Run the design with:
-```
-make DESIGN_CONFIG=exercise3/config.mk
-```
+This demo will look at the metrics reported for `nangate45/gcd`. If you haven't already, run the
+design by running `make`.
 
 Once complete, observe the final report by navigating to `logs/nangate45/alu/base/6_report.json`
 for a simple JSON-based report or `logs/nangate45/alu/base/6_report.log` for a textual report.
@@ -237,13 +231,14 @@ Total                  8.57e-04   4.56e-04   1.30e-05   1.33e-03 100.0%
 ```
 Total power is the most important metric, however you can read more about the other components
 [here](https://blogs.cuit.columbia.edu/zp2130/modeling_power_terminology). The power report is
-broken down by class, where `Sequential` represents flip-flops, `Combinational` represents logic
+broken down by group, where `Sequential` represents flip-flops, `Combinational` represents logic
 gates, `Macro` represents macros such as SRAM, and `Pad` represents I/O cells (if any).
 
 ### Calculating Max Frequency
 To determine maximum frequency, look at `finish__timing__setup__ws` or `finish report_worst_slack`
-value. "Slack" is the difference between the constraint (0.46ns) and the actual time. Positive slack means
-the constraint is met ("there is extra slack"). Negative slack means the constraint is violated.
+value. "Slack" is the difference between the constraint (0.46ns) and the actual signal propagation time.
+Positive slack means the constraint is met ("there is extra slack"). Negative slack means the
+constraint is violated.
 
 ```
 ==========================================================================
@@ -255,6 +250,7 @@ worst slack -0.08
 Using the slack, the frequency is calculated as:
 $$\mathrm{Frequency_max} = \frac{1}{\mathrm{constraint} - \mathrm{slack}}$$
 Be mindful of the sign and units of the slack. Greater slack should mean greater frequency.
+Be sure that you also calculate frequency using *setup* slack not *hold* slack.
 
 In this case, the max frequency is:
 $$\mathrm{Frequency_max} = \frac{1}{\mathrm{constraint} - \mathrm{slack}} = \frac{1}{0.46\mathrm{ns} - (-0.08\mathrm{ns})} \approx 1.85 \mathrm{GHz} $$
@@ -263,8 +259,9 @@ $$\mathrm{Frequency_max} = \frac{1}{\mathrm{constraint} - \mathrm{slack}} = \fra
 To measure the design area, you must be aware of the different types of reported area.
 1. Synthesized area
 2. Place-and-route area
-3. Die area
+3. Core area / die area
 
+#### Synthesized Area
 Synthesized area is obtained after synthesis and is a good first-order model for design space exploration.
 You can find the design area in `logs/nangate45/gcd/base/synth_stat.txt`. Units are $\mathrm{\mu m}^2$.
 
@@ -272,8 +269,9 @@ You can find the design area in `logs/nangate45/gcd/base/synth_stat.txt`. Units 
 Chip area for module '\gcd': 519.764000
 ```
 
+#### Place-and-route area
 Place-and-route area is the area obtained after cell placement and routing. If reporting this number, it
-is implied that the design does not have any violatiions which make the chip unmanufacturable (e.g.
+is implied that the design does not have any violations which make the chip unmanufacturable (e.g.
 routing or hold time violations). You can find the area from `finish__design__instance__area` or
 `finish report_design_area`.
 
@@ -284,11 +282,75 @@ finish report_design_area
 Design area 581 u^2 24% utilization.
 ```
 
-Die area is the most accurate number, as it is the exact amount of silicon that will be used for
-fabrication.
+#### Core area / die area
+Core / Die areas are the most accurate numbers, as they specify the exact area of silicon that will be
+used for fabrication. However, these numbers are not often reported for computer architecture works.
+Core area is the area of silicon which cells can occupy. It can effectively be calculated as:
+$$\mathrm{Area_{core}} = \frac{\mathrm{Area_design}}{\mathrm{utilization}}$$
+
+Die area includes all silicon area needed to fabricate the chip, including any I/O and untilized space.
+
+In the case of `nangate45/gcd`, the easiest location to find this information is from the design config,
+which specifies the die area as a set of $(x_1, y_1, x_2, y_2)$ coordinates:
+
+[`flow/designs/nangate45/gcd/config.mk`](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/blob/96a7fc08e8404bec49f9a874589a5d95638707ee/flow/designs/nangate45/gcd/config.mk):
+```
+export DIE_AREA    = 0 0 70.11 70
+export CORE_AREA   = 10.07 11.2 60.04 60.2
+```
+yielding a die area of:
+$$\mathrm{Area_{die}} = (70.11 \mathrm{\mu m} - 0 \mathrm{\mu m})\times(70 \mathrm{\mu m} - 0 \mathrm{\mu m}) = 4907.7 \mathrm{\mu m}^2$$
+
+and core area of:
+$$\mathrm{Area_{core}} = (60.04 \mathrm{\mu m} - 10.07 \mathrm{\mu m})\times(60.2 \mathrm{\mu m} - 11.2 \mathrm{\mu m}) = 2448.53 \mathrm{\mu m}^2$$
+
+which can also be obtained from the previous formula:
+$$\mathrm{Area_{core}} = \frac{\mathrm{Area_design}}{\mathrm{utilization}} = \frac{581 \mathrm{\mu m}^2}{0.24} \approx 2420.83 \mathrm{\mu m}^2$$
+
+## Exercise 3: Creating a Pareto curve
+Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
+
+`exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
+and the default clock constraint is 5ns (200 MHz). These parameters allow for RTL-to-GDS in
+under 1 minute. Run the design with:
+```
+make DESIGN_CONFIG=exercise3/config.mk
+```
+
+Once complete, observe the final report at `logs/nangate45/alu/base/6_report.json` or
+`logs/nangate45/alu/base/6_report.log`.
+
+Record the power, frequency, and area. Then, open the constraint file with your favorite editor
+and adjust the clock period to 4ns.
+
+Clean the design and rerun using the new constraint:
+```
+make DESIGN_CONFIG=../exercise3/config.mk clean_all
+make DESIGN_CONFIG=../exercise3/config.mk
+```
+
+Record the power, frequency, and area, then repeat for 3ns and 2ns.
+
+Once complete, you can plot this data using your favorite software (Google Sheets, Microsoft
+Excel, matplotlib, etc.). Use frequency as the independent variable. Confirm that your data
+matches the reference data at `exercise3/solution/data.csv`
 
 ## Exercise 4: Scaling a design across technologies
 Observe the differences when a design is implemented in different technologies.
+
+OpenROAD-flow-scripts provides 3 open-source PDKs to implement designs in: SkyWater 130nm,
+Nangate 45nm, and ASAP 7nm. RTL is easily portable across technologies if it does not contain
+technology-specific cells (such as I/O, SRAM, clock-gate cells, etc.).
+
+The `exercise4/` directory contains the same ALU design from exercise 3. However, this time you
+will change the config to alter the target technology. Uncomment one of lines in the config to
+set the target technology, then run the design using
+```
+make DESIGN_CONFIG=../exercise4/config.mk
+```
+Record the power, frequency, and area for each technology (sky130, nangate45, and asap7).
+You can again graph the data using your favorite graphing software, and also compare your data
+to the reference data at `exercise4/solution/data.csv`
 
 ## Demo 3: Building Complex Designs
 TODO
