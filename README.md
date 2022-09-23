@@ -96,6 +96,8 @@ cp results/nangate45/gcd/base/6_1_merged.gds results/nangate45/gcd/base/6_final.
 If you see that the GDS file is written out, congratulations! You have successfully installed the flow.
 
 # Demos and Exercises
+:exclamation: All demos and exercises must be performed with your current directory as
+`micro2022tutorial/OpenROAD-flow-scripts/flow`.
 
 ## Demo 1: Running the flow
 
@@ -529,20 +531,24 @@ $ make klayout_6_final.gds
 ## Exercise 1: Debugging a design #1
 Find the problem with the provided design.
 
-`exercise1/config.mk` provides a faulty design config for the design `dynamic_node` (mesh router node). Find the error by running:
+[`../../exercise1/config.mk`](exercise1/config.mk) provides a faulty design
+config for the design `dynamic_node`, which is a (mesh router node). Find the
+error by running:
 ```
-$ make DESIGN_CONFIG=exercise1/config.mk
+$ make DESIGN_CONFIG=../../exercise1/config.mk
 ```
 
-Once the error is spotted, open `exercise1/config.mk` in a text editor and fix the problematic line(s).
-You can test your solution by cleaning and rerunning the design:
+Once the error is spotted, open `../../exercise1/config.mk` in a text editor and
+fix the problematic line(s). You can test your solution by cleaning and
+rerunning the design:
 ```
 # Save time by only cleaning the floorplan step to avoid rerunning synthesis
-make DESIGN_CONFIG=exercise1/config.mk clean_floorplan
-make DESIGN_CONFIG=exercise1/config.mk
+make DESIGN_CONFIG=../../exercise1/config.mk clean_floorplan
+make DESIGN_CONFIG=../../exercise1/config.mk
 ```
 
-Compare your solution to the reference solution at `exercise1/solution/config.mk`.
+Compare your solution to the reference solution at
+[`../../exercise1/solution/config.mk`](exercise1/solution/config.mk).
 
 ## Exercise 2: Debugging a design #2
 Find the problem with the provided design.
