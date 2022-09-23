@@ -4,12 +4,10 @@
 export PLATFORM    = 
 
 export DESIGN_NAME = alu
-
-export VERILOG_FILES = ../../exercise4/$(DESIGN_NAME).v
+export VERILOG_FILES = ../../exercise4/alu.v
 export SDC_FILE      = ../../exercise4/constraint.sdc
-export ABC_AREA      = 1
 
-export CORE_UTILIZATION = 45
-export PLACE_DENSITY = 0.50
+export CORE_UTILIZATION = 35
+export PLACE_DENSITY = 0.60
 export CORE_ASPECT_RATIO = 1
 export CORE_MARGIN = 1.0

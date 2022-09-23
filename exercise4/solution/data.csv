@@ -1,0 +1,4 @@
+platform,clock period (ns),max frequency (MHz),area (um^2),total power (W)
+sky130hd,7,55,11811,1.06e-03
+nangate45,7,173,2122,1.83e-04
+asap7,7,278,156,4.51e-05
