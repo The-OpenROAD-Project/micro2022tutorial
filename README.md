@@ -736,7 +736,7 @@ make DESIGN_CONFIG=../exercise4/config.mk
 ```
 Record the power, frequency, and area for each technology (sky130, nangate45, and asap7).
 You can again graph the data using your favorite graphing software, and also compare your data
-to the reference data at `exercise4/solution/data.csv`
+to the reference data at [`../../exercise4/solution/data.csv`](exercise4/solution/data.csv)
 
 ## Demo 3: Building Complex Designs
 Follow along as the presenter explains how to incorporate macros into your design.
@@ -813,10 +813,10 @@ Common problems when introducing macros:
 ## Exercise 5: Setting Up a New Design with OpenROAD-flow-Scripts
 If you have your own RTL, now's the time to use it!
 
-The directory `../exercise5/` contains a blank `config.mk` template and blank `constraint.sdc`
+The directory `exercise5/` contains a blank `config.mk` template and blank `constraint.sdc`
 template.
 
-* If you have Verilog RTL file(s), place it (them) in `../exercise5/`.
+* If you have Verilog RTL file(s), place it (them) in `../../exercise5/`.
 * If you don't have your own RTL, you can use the provided `counter.v` file instead.
 
 Feel free to use other designs as a reference! Use any platform you want.
