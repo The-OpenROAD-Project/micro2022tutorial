@@ -710,7 +710,8 @@ Record the power, frequency, and area, then repeat for 5ns and 4ns.
 
 Once complete, you can plot this data using your favorite software (Google Sheets, Microsoft
 Excel, matplotlib, etc.). Use frequency as the independent variable. Confirm that your data
-matches the reference data at `exercise3/solution/data.csv`
+matches the reference data at
+[`../../exercise3/solution/data.csv`](exercise3/solution/data.csv)
 
 ## Exercise 4: Scaling a design across technologies
 Observe the differences when a design is implemented in different technologies.
