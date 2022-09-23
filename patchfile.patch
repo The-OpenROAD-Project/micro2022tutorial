@@ -1,0 +1,15 @@
+diff --git a/flow/scripts/report_metrics.tcl b/flow/scripts/report_metrics.tcl
+index 68348b16..5ba8b4e2 100644
+--- a/flow/scripts/report_metrics.tcl
++++ b/flow/scripts/report_metrics.tcl
+@@ -20,8 +20,8 @@ proc report_metrics { when {include_erc true} } {
+   puts "$when report_clock_skew"
+   puts "--------------------------------------------------------------------------"
+   report_clock_skew
+-  report_clock_skew_metric
+-  report_clock_skew_metric -hold
++  #report_clock_skew_metric
++  #report_clock_skew_metric -hold
+ 
+   puts "\n=========================================================================="
+   puts "$when report_checks -path_delay min"
