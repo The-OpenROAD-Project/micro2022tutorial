@@ -101,7 +101,9 @@ If you see that the GDS file is written out, congratulations! You have successfu
 
 Follow along as the presenter explains each step / sub-step of the flow (click to expand each section).
 
-### Synthesis
+<details>
+  <summary><h3>Synthesis</h3></summary>
+
 1. Perform file preprocessing (mainly for yosys)
    ```
    ./util/markDontUse.py 
@@ -145,17 +147,360 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
    ```
    17. Executing Verilog backend.
    ```
-   
-### Floorplanning
+</details>
 
-### Global Placement
-### Detailed Placement
-### Clock Tree Synthesis
-### Global Routing
-### Detailed Routing
-### Parasitic Extraction
-### Timing Signoff
-### GDS Export
+<details>
+  <summary><h3>Floorplanning</h3></summary>
+
+1. Initialize chip area
+   ```
+   [INFO IFP-0001] Added 35 rows of 263 sites.
+   ```
+2. I/O pin placement
+   ```
+   Using 1u default distance from corners.
+   Using 2 tracks default min distance between IO pins.
+   [INFO PPL-0007] Random pin placement.
+   ```
+3. Insert tapcells and endcaps
+   ```
+   [INFO TAP-0004] Inserted 70 endcaps.
+   [INFO TAP-0005] Inserted 0 tapcells.
+   ```
+4. Generate power grid
+   ```
+   [INFO PDN-0001] Inserting grid: grid
+   ```
+</details>
+
+<details>
+  <summary><h3>Global Placement</h3></summary>
+
+1. Initial place
+   ```
+   [InitialPlace]  Iter: 1 CG residual: 0.00000008 HPWL: 7481451
+   [InitialPlace]  Iter: 2 CG residual: 0.00000006 HPWL: 6842787
+   [InitialPlace]  Iter: 3 CG residual: 0.00000009 HPWL: 6812234
+   [InitialPlace]  Iter: 4 CG residual: 0.00000007 HPWL: 6797416
+   [InitialPlace]  Iter: 5 CG residual: 0.00000009 HPWL: 6771698
+   ```
+2. Nesterov gradient descent (with timing-driven weighting)
+   ```
+   [NesterovSolve] Iter: 10 overflow: 0.408459 HPWL: 5518685
+   [NesterovSolve] Iter: 20 overflow: 0.369914 HPWL: 5301283
+   [NesterovSolve] Iter: 30 overflow: 0.356915 HPWL: 5274819
+   [NesterovSolve] Iter: 40 overflow: 0.355273 HPWL: 5251818
+   [NesterovSolve] Iter: 50 overflow: 0.357892 HPWL: 5262578
+   # ...
+   [INFO GPL-0100] worst slack -6.41e-11
+   [INFO GPL-0103] Weighted 38 nets.
+   # ...
+   [NesterovSolve] Iter: 350 overflow: 0.105841 HPWL: 5296714
+   [NesterovSolve] Finished with Overflow: 0.098895
+   ```
+3. Timing optimization and electrical rule fixing
+   ```
+   Perform port buffering...
+   [INFO RSZ-0027] Inserted 35 input buffers.
+   [INFO RSZ-0028] Inserted 18 output buffers.
+   Perform buffer insertion...
+   [INFO RSZ-0058] Using max wire length 661um.
+   [INFO RSZ-0039] Resized 39 instances.
+   Repair tie lo fanout...
+   Repair tie hi fanout...
+   ```
+</details>
+
+<details>
+  <summary><h3>Detailed Placement</h3></summary>
+
+1. Optimize and legaliize placement
+   ```
+   Detailed placement improvement.
+   Importing netlist into detailed improver.
+   [INFO DPO-0100] Creating network with 470 cells, 54 terminals, 471 edges and 1293 pins.
+   [INFO DPO-0109] Network stats: inst 524, edges 471, pins 1293
+   [INFO DPO-0110] Number of regions is 1
+   [INFO DPO-0401] Setting random seed to 1.
+   # ...
+   Detailed Improvement Results
+   ------------------------------------------
+   Original HPWL             2915.0 u
+   Final HPWL                2703.4 u
+   Delta HPWL                  -7.3 %
+
+2. Cell mirroring
+   ```
+   INFO DPL-0020] Mirrored 20 instances
+   [INFO DPL-0021] HPWL before            2703.4 u
+   [INFO DPL-0022] HPWL after             2700.8 u
+   [INFO DPL-0023] HPWL delta               -0.1 %
+   ```
+</details>
+
+<details>
+  <summary><h3>Clock Tree Synthesis</h3></summary>
+
+1. Buffer characterization
+   ```
+   [INFO CTS-0049] Characterization buffer is: BUF_X4.
+   [INFO CTS-0039] Number of created patterns = 11880.
+   [INFO CTS-0084] Compiling LUT.
+   Min. len    Max. len    Min. cap    Max. cap    Min. slew   Max. slew
+   2           8           1           34          1           14
+   ```
+2. Generate clock tree
+   ```
+   [INFO CTS-0007] Net "clk" found for clock "core_clock".
+   [INFO CTS-0010]  Clock net "clk" has 35 sinks.
+   [INFO CTS-0008] TritonCTS found 1 clock nets.
+   [INFO CTS-0097] Characterization used 1 buffer(s) types.
+   [INFO CTS-0027] Generating H-Tree topology for net clk.
+   [INFO CTS-0028]  Total number of sinks: 35.
+   ```
+3. Resize / repair clock tree
+   ```
+   [INFO RSZ-0058] Using max wire length 661um.
+   ```
+4. Legalize buffers
+   ```
+   Placement Analysis
+   ---------------------------------
+   total displacement         12.1 u
+   average displacement        0.0 u
+   max displacement            2.2 u
+   original HPWL            2814.9 u
+   legalized HPWL           2884.6 u
+   delta HPWL                    2 %
+   ```
+5. Repair timing
+   ```
+   Repair setup and hold violations...
+   [INFO RSZ-0040] Inserted 3 buffers.
+   [INFO RSZ-0041] Resized 29 instances.
+   [WARNING RSZ-0062] Unable to repair all setup violations.
+   [INFO RSZ-0033] No hold violations found.
+   ```
+6. Legalize buffers again
+   ```
+   Placement Analysis
+   ---------------------------------
+   total displacement         21.5 u
+   average displacement        0.0 u
+   max displacement            2.2 u
+   original HPWL            2896.4 u
+   legalized HPWL           2917.9 u
+   delta HPWL                    1 %
+   ```
+7. Insert filler cells
+   ```
+   [INFO DPL-0001] Placed 704 filler instances.
+   ```
+</details>
+   
+<details>
+  <summary><h3>Global Routing</h3></summary>
+
+1. Generate routing grid
+   ```
+   [INFO GRT-0053] Routing resources analysis:
+             Routing      Original      Derated      Resource
+   Layer     Direction    Resources     Resources    Reduction (%)
+   ---------------------------------------------------------------
+   metal1     Horizontal          0             0          0.00%
+   metal2     Vertical        11979          2464          79.43%
+   metal3     Horizontal      16335          4704          71.20%
+   metal4     Vertical         7623          5394          29.24%
+   metal5     Horizontal       7623          5408          29.06%
+   metal6     Vertical         7623          5440          28.64%
+   metal7     Horizontal       2178          1120          48.58%
+   metal8     Vertical         2178          1120          48.58%
+   metal9     Horizontal       1089            32          97.06%
+   metal10    Vertical         1089            32          97.06%
+   ---------------------------------------------------------------
+   ```
+2. Perform global routing
+   ```
+   [INFO GRT-0096] Final congestion report:
+   Layer         Resource        Demand        Usage (%)    Max H / Max V / Total Overflow
+   ---------------------------------------------------------------------------------------
+   metal1               0             0            0.00%             0 /  0 /  0
+   metal2            2464           489           19.85%             0 /  0 /  0
+   metal3            4704           677           14.39%             0 /  0 /  0
+   metal4            5394           317            5.88%             0 /  0 /  0
+   metal5            5408            87            1.61%             0 /  0 /  0
+   metal6            5440             4            0.07%             0 /  0 /  0
+   metal7            1120             0            0.00%             0 /  0 /  0
+   metal8            1120             0            0.00%             0 /  0 /  0
+   metal9              32             0            0.00%             0 /  0 /  0
+   metal10             32             0            0.00%             0 /  0 /  0
+   ---------------------------------------------------------------------------------------
+   Total            25714          1574            6.12%             0 /  0 /  0
+   ```
+3. Check for antenna violations
+   ```
+   [INFO ANT-0002] Found 0 net violations.
+   [INFO ANT-0001] Found 0 pin violations.
+   ```
+</details>
+
+<details>
+  <summary><h3>Detailed Routing</h3></summary>
+
+1. Region query
+   ```
+   [INFO DRT-0168] Init region query.
+   [INFO DRT-0024]   Complete active.
+   [INFO DRT-0024]   Complete Fr_VIA.
+   [INFO DRT-0024]   Complete metal1.
+   [INFO DRT-0024]   Complete via1.
+   # ...
+   ```
+2. Pin access
+   ```
+   [INFO DRT-0165] Start pin access.
+   [INFO DRT-0076]   Complete 100 pins.
+   [INFO DRT-0078]   Complete 176 pins.
+   [INFO DRT-0081]   Complete 53 unique inst patterns.
+   [INFO DRT-0084]   Complete 251 groups.
+   ```
+3. Post-process guides
+   ```
+   [INFO DRT-0169] Post process guides.
+   [INFO DRT-0176] GCELLGRID X 0 DO 33 STEP 4200 ;
+   [INFO DRT-0177] GCELLGRID Y 0 DO 33 STEP 4200 ;
+   [INFO DRT-0028]   Complete active.
+   [INFO DRT-0028]   Complete Fr_VIA.
+   [INFO DRT-0028]   Complete metal1.
+   [INFO DRT-0028]   Complete via1.
+   ```
+4. Track assignment
+   ```
+   [INFO DRT-0181] Start track assignment.
+   [INFO DRT-0184] Done with 906 vertical wires in 1 frboxes and 1498 horizontal wires in 1 frboxes.
+   [INFO DRT-0186] Done with 181 vertical wires in 1 frboxes and 287 horizontal wires in 1 frboxes.
+   [INFO DRT-0182] Complete track assignment.
+   ```
+5. Detailed routing
+   ```
+   [INFO DRT-0194] Start detail routing.
+   [INFO DRT-0195] Start 0th optimization iteration.
+       Completing 10% with 0 violations.
+       elapsed time = 00:00:00, memory = 96.41 (MB).
+       Completing 20% with 0 violations.
+       elapsed time = 00:00:00, memory = 96.70 (MB).
+       Completing 30% with 0 violations.
+   # ...
+       Completing 100% with 10 violations.
+       elapsed time = 00:00:01, memory = 129.02 (MB).
+   [INFO DRT-0199]   Number of violations = 88.
+   Viol/Layer      metal1 metal2 metal3   via3 metal4 metal5
+   Cut Spacing          0      0      0      2      0      0
+   Metal Spacing        1      1      0      0      0      0
+   NS Metal             0      0      1      0      0      0
+   Recheck              0     32     31      0     12      3
+   Short                0      4      0      0      1      0
+   # ...
+   [INFO DRT-0199]   Number of violations = 0.
+   # ...
+   [INFO DRT-0198] Complete detail routing.
+   Total wire length = 3573 um.
+   ```
+</details>
+
+<details>
+  <summary><h3>Parasitic Extraction</h3></summary>
+
+Extract parasitic capacitances and resistances
+```
+[INFO RCX-0008] extracting parasitics of gcd ...
+[INFO RCX-0435] Reading extraction model file ./platforms/nangate45/rcx_patterns.rules ...
+[INFO RCX-0436] RC segment generation gcd (max_merge_res 50.0) ...
+[INFO RCX-0040] Final 1266 rc segments
+[INFO RCX-0439] Coupling Cap extraction gcd ...
+# ...
+[INFO RCX-0017] Finished writing SPEF ...
+```
+</details>
+
+<details>
+  <summary><h3>Timing Signoff</h3></summary>
+
+1. Report final timing
+   ```
+   ==========================================================================
+   finish report_tns
+   --------------------------------------------------------------------------
+   tns -1.57
+  
+   ==========================================================================
+   finish report_wns
+   --------------------------------------------------------------------------
+   wns -0.08
+  
+   ==========================================================================
+   finish report_worst_slack
+   --------------------------------------------------------------------------
+   worst slack -0.08
+  
+   ==========================================================================
+   finish report_clock_skew
+   --------------------------------------------------------------------------
+   Clock core_clock
+   Latency      CRPR       Skew
+   _699_/CK ^
+      0.05
+   _679_/CK ^
+      0.05      0.00       0.00
+   ```
+2. Report final electrical violations
+   ```
+   finish max_slew_violation_count
+   --------------------------------------------------------------------------
+   max slew violation count 0
+   
+   ==========================================================================
+   finish max_fanout_violation_count
+   --------------------------------------------------------------------------
+   max fanout violation count 0
+  
+   ==========================================================================
+   finish max_cap_violation_count
+   --------------------------------------------------------------------------
+   max cap violation count 0
+
+   ==========================================================================
+   finish setup_violation_count
+   --------------------------------------------------------------------------
+   setup violation count 0
+
+   ==========================================================================
+   finish hold_violation_count
+   --------------------------------------------------------------------------
+   hold violation count 1
+   ```
+
+</details>
+
+<details>
+  <summary><h3>GDS Export</h3></summary>
+
+Export DEF file to GDS file
+```
+[INFO] Reading DEF ...
+[INFO] Clearing cells...
+[INFO] Merging GDS/OAS files...
+        ./platforms/nangate45/gds/NangateOpenCellLibrary.gds
+[INFO] Copying toplevel cell 'gcd'
+WARNING: no fill config file specified
+[INFO] Checking for missing cell from GDS/OAS...
+[INFO] Found GDS_ALLOW_EMPTY variable.
+[INFO] All LEF cells have matching GDS/OAS cells
+[INFO] Checking for orphan cell in the final layout...
+[INFO] No orphan cells
+[INFO] Writing out GDS/OAS 'results/nangate45/gcd/base/6_1_merged.gds'
+```
+</details>
 
 ## Exercise 1: Debugging a design #1
 Find the problem with the provided design.
