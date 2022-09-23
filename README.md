@@ -553,20 +553,22 @@ Compare your solution to the reference solution at
 ## Exercise 2: Debugging a design #2
 Find the problem with the provided design.
 
-`exercise2/config.mk` provides a faulty design config. Find the error by running:
+[`../../exercise2/config.mk`](exercise2/config.mk) provides a faulty design config.
+Find the error by running:
 ```
-make DESIGN_CONFIG=exercise2/config.mk
+make DESIGN_CONFIG=../../exercise2/config.mk
 ```
 
-Once the error is spotted, open `exercise2/config.mk` in a text editor and fix the problematic line.
-You can test your solution by cleaning and rerunning the design:
+Once the error is spotted, open `../../exercise2/config.mk` in a text editor and fix
+the problematic line. You can test your solution by cleaning and rerunning the design:
 ```
 # Save time by only cleaning the floorplan step to avoid rerunning synthesis
-make DESIGN_CONFIG=exercise2/ibex.mk clean_all
-make DESIGN_CONFIG=exercise2/ibex.mk
+make DESIGN_CONFIG=../../exercise2/config.mk clean_floorplan
+make DESIGN_CONFIG=../../exercise2/config.mk
 ```
 
-Compare your solution to the reference solution at `exercise2/solution/config.mk`
+Compare your solution to the reference solution at
+[`../../exercise2/solution/config.mk`](exercise2/solution/config.mk).
 
 
 
