@@ -50,7 +50,7 @@ title2="MacOS"
 text2="OpenROAD has preliminary support for MacOS. You can use the OpenROAD dependency installer script:
 
 ```
-micro2022tutorial/OpenROAD-flow-scripts/OpenROAD/etc/DependencyInstaller.sh
+micro2022tutorial/OpenROAD-flow-scripts/tools/OpenROAD/etc/DependencyInstaller.sh
 ```
 Then, install additional dependencies for OpenROAD-flow-scripts:
 ```
@@ -64,7 +64,7 @@ title3="Linux"
 text3="
 If you use Ubuntu or CentOS, you can use the OpenROAD dependency installer script:
 ```
-micro2022tutorial/OpenROAD-flow-scripts/OpenROAD/etc/DependencyInstaller.sh
+sudo micro2022tutorial/OpenROAD-flow-scripts/tools/OpenROAD/etc/DependencyInstaller.sh
 ```
 Using a different distribution is not recommended, however you may view the script and identify how to manually install
 the required packages for your distribution.
