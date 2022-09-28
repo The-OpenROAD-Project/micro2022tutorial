@@ -17,8 +17,8 @@ Please bring a laptop with:
 * *Optional*: your own Verilog RTL designs!
 
 We strongly recommend setting up the tools **before** arriving to the tutorial so you don't miss anything! We will
-provide USB 3.0 drives with virtual machine appliance files (`.ova`) at the tutorial. Internet connections may be
-unstable at the tutorial venue, so do not expect to connect to a remote server!
+provide USB 3.0 drives with virtual machine appliance files (`.ova` / `.utm`) at the tutorial. Internet connections may
+be unstable at the tutorial venue, so do not expect to connect to a remote server!
 
 ## Toolchain Installation
 
@@ -29,31 +29,54 @@ support for Ubuntu 20 and Centos 7.
 {% include alert.html text="If using this option, be sure you have at least 14 GB free disk space (20 recommended)."
 align="center" color="warning" %} 
 
-You may install any virtual machine which supports `.ova` files. Some options include:
+{% include alert.html text="Virtual machine username: **user** password: **openroad**" align="center" color="info" %}
+
+#### x86_64 Hosts (Windows, Linux, MacOS)
+##### Install Virtual Machine Software
+
+If setting up **prior to the tutorial**, you can download any virtual machine which supports `.ova` files. Some options
+include:
 
 * [Oracle VirtualBox](https://www.virtualbox.org)
 * [VMWare Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html)
 
-Virtual machine files and VirtualBox installers will be provided at the tutorial via USB 3.0 drives. We recommend
-installing virtual machine software beforehand to save time!
+Download and run the appropriate installer for your system.
 
-#### Install Virtual Machine Software
-**Before the tutorial**: Visit one of the aforementioned sites to download and run an installer.
-
-**At the tutorial**: The flash drive will contain several versions of VirtualBox. Find the one suitable for your OS and
-run the installer.
+If setting up **at the tutorial**, we will provide USB 3.0 flash drives which contain several versions of VirtualBox.
+Find the one suitable for your OS and run the installer.
 
 Some OSs may require you to enable hardware virtualization (if not already) and restart your computer.
 
-#### Import Virtual Appliance
-1. Open VirtualBox and navigate to *File > Import Appliance...*
-2. Select the `openroad-tutorial-micro2022.ova` file from your flash drive
-3. Alter any default parameters for your virtual machine. Note: We recommend at least 4 GB RAM and 4 processors, but no
-more than 3/4 of your total system RAM or processors. Lubuntu may have trouble booting with only 1 processor.
+##### Import Virtual Appliance
+1. Start VirtualBox and navigate to *File > Import Appliance...*
+2. Select `images/x86_64/openroad-tutorial-micro2022.ova` from your flash drive and select "Next".
+3. Alter any default parameters for your virtual machine. We recommend at least 4 GB RAM and 4 processors, but no
+more than 3/4 of your total system RAM or processors. The VM OS (Lubuntu) may have trouble booting with only 1
+processor.
+4. Select "Import" and wait for the process to finish.
 
-#### Launch the Virtual Machine
-1. Select `openroad-tutorial-micro2022` from your list of virtual machines and press Start.
+##### Launch the Virtual Machine
+1. Select `openroad-tutorial-micro2022` from your list of virtual machines and press "Start".
 2. Allow a few minutes for the virtual machine to boot into Lubuntu. Warnings during boot can be ignored.
+3. If needed, the username is **user** and the password is **openroad**.
+
+#### arm64 Hosts (MacOS)
+##### Install Virtual Machine Software
+
+If setting up **prior to the tutorial**, you can download and install [UTM](https://mac.getutm.app). The provided
+`.dmg` is free and equivalent to the App Store version.
+
+If setting up **at the tutorial**, we will provide USB 3.0 flash drives which contain the installer for UTM.
+
+##### Import Virtual Appliance
+1. Copy `images/arm64/openroad-tutorial-micro2022.utm.bz2` from the flash drive to your local disk.
+2. Extract the image. In terminal, you can use `tar -xf openroad-tutorial-micro2022.utm.bz2`.
+3. Start UTM, then drag and drop `openroad-tutorial-micro2022.utm` onto the window.
+
+##### Launch the Virtual Machine
+1. Press the "play" icon on the openroad-tutorial-micro2022 virtual machine
+2. Allow a few minutes for the virtual machine to boot into Lubuntu. Warnings during boot can be ignored.
+3. If needed, the username is **user** and the password is **openroad**.
 
 #### Test the Toolchain
 1. Open QTerminal
@@ -79,6 +102,7 @@ sources and test using Docker.
 # Must be run from the micro2022tutorial directory
 $ docker run -it -u $(id -u ${USER}):$(id -g ${USER}) -v $(pwd)/OpenROAD-flow-scripts/flow/platforms:/OpenROAD-flow-scripts/flow/platforms:ro -v $(pwd):/micro2022tutorial openroad/flow-scripts
 
+# The following lines will be executed inside the Docker container
 $ cd /OpenROAD-flow-scripts/flow
 $ make
 ```
@@ -87,6 +111,8 @@ If the flow completes without error, congrats! You are ready to start the tutori
 to reset your flow build.
 
 ### Method 3: Install from Source
+
+{% include alert.html text="Installing from source can take up to an hour." align="center" color="warning" %}
 
 This method will build OpenROAD-flow-scripts components (OpenROAD and Yosys) from source. Package managers are used to
 install (most) dependencies.
