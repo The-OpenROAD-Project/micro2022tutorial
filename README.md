@@ -586,8 +586,8 @@ Follow along as the presenter demonstrates how to observe design metrics.
 This demo will look at the metrics reported for `nangate45/gcd`. If you haven't already, run the
 design by running `make`.
 
-Once complete, observe the final report by navigating to `logs/nangate45/alu/base/6_report.json`
-for a simple JSON-based report or `logs/nangate45/alu/base/6_report.log` for a textual report.
+Once complete, observe the final report by navigating to `logs/nangate45/gcd/base/6_report.json`
+for a simple JSON-based report or `logs/nangate45/gcd/base/6_report.log` for a textual report.
 
 ### Modeling Power
 To observe the modeled power, look at `finish__power__total` or `finish report_power`. Note that
