@@ -1,4 +1,3 @@
-# Try setting clock period to 7, 6, 5, 4, 3
 set clk_period 7
 
 # Don't change below here
