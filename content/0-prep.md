@@ -34,25 +34,22 @@ align="center" color="warning" %}
 #### x86_64 Hosts (Windows, Linux, MacOS)
 ##### Install Virtual Machine Software
 
-If setting up **prior to the tutorial**, you can download any virtual machine which supports `.ova` files. Some options
-include:
-
-* [Oracle VirtualBox](https://www.virtualbox.org)
-* [VMWare Workstation Player](https://www.vmware.com/products/workstation-player/workstation-player-evaluation.html)
-
-Download and run the appropriate installer for your system.
+If setting up **prior to the tutorial**, you can download any virtual machine which supports `.ova` files. We will be
+using VirtualBox for VM software. Visit VirtualBox's [download page](https://www.virtualbox.org/wiki/Downloads) to
+download and run the installer for your OS.
 
 If setting up **at the tutorial**, we will provide USB 3.0 flash drives which contain several versions of VirtualBox.
-Find the one suitable for your OS and run the installer.
+Navigate to `x86_64/vm_installer` on the flash drive and run the installer for your OS.
 
 Some OSs may require you to enable hardware virtualization (if not already) and restart your computer.
 
 ##### Import Virtual Appliance
 1. Start VirtualBox and navigate to *File > Import Appliance...*
-2. Select `images/x86_64/openroad-tutorial-micro2022.ova` from your flash drive and select "Next".
+2. Select `x86_64/vm_image/openroad-tutorial-micro2022.ova` from your flash drive and select "Next".
 3. Alter any default parameters for your virtual machine. We recommend at least 4 GB RAM and 4 processors, but no
-more than 3/4 of your total system RAM or processors. The VM OS (Lubuntu) may have trouble booting with only 1
-processor.
+more than 3/4 of your total system RAM or 3/4 of your processors. Please use at least 2 processors or the VM OS
+(Lubuntu) may not boot.
+
 4. Select "Import" and wait for the process to finish.
 
 ##### Launch the Virtual Machine
