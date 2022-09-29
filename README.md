@@ -95,14 +95,6 @@ cp results/nangate45/gcd/base/6_1_merged.gds results/nangate45/gcd/base/6_final.
 
 If you see that the GDS file is written out, congratulations! You have successfully installed the flow.
 
-# Temporary Workaround
-A recent change in the upstream repo has caused some instability in smaller
-designs. Please use `patchfile.patch` before starting the exercises:
-```
-patch OpenROAD-flow-scripts/flow/scripts/report_metrics.tcl patchfile.patch
-```
-
-
 # Demos and Exercises
 :exclamation: All demos and exercises must be performed with your current directory as
 `micro2022tutorial/OpenROAD-flow-scripts/flow`.
