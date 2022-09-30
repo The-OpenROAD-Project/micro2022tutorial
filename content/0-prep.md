@@ -106,6 +106,15 @@ sources and test using Docker.
 * OpenROAD-flow-scripts is already included in the micro2022tutorial repo.
 * The tools will only be accessible inside the installed docker container.
 
+#### Apply the Patchfile
+There some temporary instability in Exercises 2 and 3 caused by upstream changes. Apply the patchfile to perform
+a workaround:
+
+```
+$ cd micro2022tutorial
+$ patch OpenROAD-flow-scripts/flow/scripts/report_metrics.tcl patchfile.patch
+patching file OpenROAD-flow-scripts/flow/scripts/report_metrics.tcl
+```
 
 #### Test the Toolchain
 ```
@@ -177,6 +186,16 @@ Run the install script. This step may take up to an hour, depending on your inte
 # This script uses all available cores to build. Use --threads N to use N threads
 # Use --help to see all build options
 $ micro2022tutorial/OpenROAD-flow-scripts/build_openroad.sh
+```
+
+#### Apply the Patchfile
+There some temporary instability in Exercises 2 and 3 caused by upstream changes. Apply the patchfile to perform
+a workaround:
+
+```
+$ cd micro2022tutorial
+$ patch OpenROAD-flow-scripts/flow/scripts/report_metrics.tcl patchfile.patch
+patching file OpenROAD-flow-scripts/flow/scripts/report_metrics.tcl
 ```
 
 #### Test the Toolchain
