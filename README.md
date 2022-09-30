@@ -26,6 +26,8 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
 <details>
   <summary><h3>Synthesis</h3></summary>
 
+Run `make synth` and examine the output:
+
 1. Perform file preprocessing (mainly for yosys)
    ```
    ./util/markDontUse.py 
@@ -74,6 +76,8 @@ Follow along as the presenter explains each step / sub-step of the flow (click t
 <details>
   <summary><h3>Floorplanning</h3></summary>
 
+Run `make floorplan` and examine the output:
+
 1. Initialize chip area
    ```
    [INFO IFP-0001] Added 35 rows of 263 sites.
@@ -101,6 +105,8 @@ $ make gui_floorplan
 
 <details>
   <summary><h3>Global Placement</h3></summary>
+
+Run `make place` and examine the output:
 
 1. Initial place
    ```
@@ -171,6 +177,8 @@ $ make gui_place
 <details>
   <summary><h3>Clock Tree Synthesis</h3></summary>
 
+Run `make cts` and examine the output:
+
 1. Buffer characterization
    ```
    [INFO CTS-0049] Characterization buffer is: BUF_X4.
@@ -234,6 +242,8 @@ $ make gui_cts
    
 <details>
   <summary><h3>Global Routing</h3></summary>
+
+Run `make route` and examine the output:
 
 1. Generate routing grid
    ```
@@ -348,6 +358,8 @@ $ make gui_route
 
 <details>
   <summary><h3>Parasitic Extraction</h3></summary>
+
+Run `make finish` and examine the output:
 
 Extract parasitic capacitances and resistances
 ```
@@ -746,8 +758,8 @@ Common problems when introducing macros:
 ## Exercise 5: Setting Up a New Design with OpenROAD-flow-Scripts
 If you have your own RTL, now's the time to use it!
 
-The directory `exercise5/` contains a blank `config.mk` template and blank `constraint.sdc`
-template.
+The directory `../../exercise5/` contains a blank [`config.mk`](exercise5/config.mk)
+template and blank [`constraint.sdc`](exercise5/constraint.sdc) template.
 
 * If you have Verilog RTL file(s), place it (them) in `../../exercise5/`.
 * If you don't have your own RTL, you can use the provided `counter.v` file instead.
