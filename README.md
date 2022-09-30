@@ -1,5 +1,3 @@
-# :warning: **This tutorial is still in development** :warning:
-
 # OpenROAD: Open-Source ASIC Design for Computer Architects
 
 This repository contains all material needed to participate in the tutorial hosted at MICRO 2022.
@@ -13,93 +11,15 @@ Please see the [tutorial website](https://the-openroad-project.github.io/micro20
 **Location**: [The Westin Chicago River North Hotel](https://www.marriott.com/en-us/hotels/chino-the-westin-chicago-river-north/),
 Chicago, IL, USA. Room TBD.
 
-## Preparation
+## Preparation and Installation
 See [Tutorial Preparation](https://the-openroad-project.github.io/micro2022tutorial/content/0-prep.html).
 
-## Installation
-For demonstration, this tutorial will install in `user`'s home folder. The tools may be installed anywhere you prefer.
-
-Download the tutorial repository:
-```
-$ git clone --recursive https://github.com/The-OpenROAD-Project/micro2022tutorial.git
-```
-Install all required tools (will take several minutes):
-```
-# This script uses all available cores to build OpenROAD, Yosys, and the LSOracle Yosys plugin
-# To use N threads, use --threads N
-# For more options, use --help
-$ ./micro2022tutorial/OpenROAD-flow-scripts/build_openroad.sh
-```
-You will find the tools installed locally in `micro2022tutorial/OpenROAD-flow-scripts/tools/install`.
-```
-$ tree -L 3 micro2022tutorial/OpenROAD-flow-scripts/tools/install
-micro2022tutorial/OpenROAD-flow-scripts/tools/install
-├── LSOracle
-│   ├── bin
-│   │   └── lsoracle
-│   └── share
-│       └── lsoracle
-├── OpenROAD
-│   ├── bin
-│   │   ├── openroad
-│   │   └── sta
-│   ├── include
-│   │   └── sta
-│   └── lib
-│       └── libOpenSTA.a
-└── yosys
-    ├── bin
-    │   ├── yosys
-    │   ├── yosys-abc
-    │   ├── yosys-config
-    │   ├── yosys-filterlib
-    │   └── yosys-smtbmc
-    └── share
-        └── yosys
-```
-
-Set up your environment:
-```
-$ source micro2022tutorial/OpenROAD-flow-scripts/setup_env.sh
-OPENROAD: /home/user/micro2022tutorial/OpenROAD-flow-scripts/tools/OpenROAD
-```
-
-Test that `yosys`, `openroad`, and `klayout` are in your `PATH`:
-```
-$ command -v yosys
-/home/user/micro2022tutorial/OpenROAD-flow-scripts/tools/install/yosys/bin/yosys
-
-$ command -v openroad
-/home/user/micro2022tutorial/OpenROAD-flow-scripts/tools/install/openroad/bin/openroad
-
-# Your KLayout installation path may vary
-$ command -v klayout
-/usr/local/bin/klayout
-```
-
-Test that a sample design works:
-```
-$ cd micro2022tutorial/OpenROAD-flow-scripts/flow
-$ make
-[INFO][FLOW] Using platform directory ./platforms/nangate45
-./util/markDontUse.py -p "TAPCELL_X1 FILLCELL_X1 AOI211_X1 OAI211_X1" -i platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib -o objects/nangate45/gcd/base/lib/NangateOpenCellLibrary_typical.lib
-Opening file for replace: platforms/nangate45/lib/NangateOpenCellLibrary_typical.lib
-Marked 4 cells as dont_use
-
-# ...
-
-[INFO] Writing out GDS/OAS 'results/nangate45/gcd/base/6_1_merged.gds'
-Elapsed time: 0:00.93[h:]min:sec. CPU time: user 0.79 sys 0.07 (93%). Peak memory: 229832KB.
-cp results/nangate45/gcd/base/6_1_merged.gds results/nangate45/gcd/base/6_final.gds
-```
-
-If you see that the GDS file is written out, congratulations! You have successfully installed the flow.
 
 # Demos and Exercises
 :exclamation: All demos and exercises must be performed with your current directory as
 `micro2022tutorial/OpenROAD-flow-scripts/flow`.
 
-## Demo 1: Running the flow
+## Demo 1: Running the Flow
 
 Follow along as the presenter explains each step / sub-step of the flow (click to expand each section).
 
@@ -528,11 +448,11 @@ $ make klayout_6_final.gds
 ```
 </details>
 
-## Exercise 1: Debugging a design #1
+## Exercise 1: Debugging a Design #1
 Find the problem with the provided design.
 
 [`../../exercise1/config.mk`](exercise1/config.mk) provides a faulty design
-config for the design `dynamic_node`, which is a (mesh router node). Find the
+config for the design `dynamic_node`, which is a mesh router node. Find the
 error by running:
 ```
 $ make DESIGN_CONFIG=../../exercise1/config.mk
@@ -550,7 +470,7 @@ make DESIGN_CONFIG=../../exercise1/config.mk
 Compare your solution to the reference solution at
 [`../../exercise1/solution/config.mk`](exercise1/solution/config.mk).
 
-## Exercise 2: Debugging a design #2
+## Exercise 2: Debugging a Design #2
 Find the problem with the provided design.
 
 [`../../exercise2/config.mk`](exercise2/config.mk) provides a faulty design config.
@@ -572,7 +492,7 @@ Compare your solution to the reference solution at
 
 
 
-## Demo 2: Analyzing your design using OpenROAD
+## Demo 2: Analyzing Your Design Using OpenROAD
 Follow along as the presenter demonstrates how to observe design metrics.
 
 This demo will look at the metrics reported for `nangate45/gcd`. If you haven't already, run the
@@ -646,7 +566,7 @@ You can find the design area in `logs/nangate45/gcd/base/synth_stat.txt`. Units 
 Chip area for module '\gcd': 519.764000
 ```
 
-#### Place-and-route area
+#### Place-and-Route Area
 Place-and-route area is the area obtained after cell placement and routing. If reporting this number, it
 is implied that the design does not have any violations which make the chip unmanufacturable (e.g.
 routing or hold time violations). You can find the area from `finish__design__instance__area` or
@@ -659,7 +579,7 @@ finish report_design_area
 Design area 581 u^2 24% utilization.
 ```
 
-#### Core area / die area
+#### Core Area / Die Area
 Core / Die areas are the most accurate numbers, as they specify the exact area of silicon that will be
 used for fabrication. However, these numbers are not often reported for computer architecture works.
 Core area is the area of silicon which cells can occupy. It can effectively be calculated as:
@@ -684,10 +604,10 @@ $$\mathrm{Area_{core}} = (60.04 \mathrm{\mu m} - 10.07 \mathrm{\mu m})\times(60.
 which can also be obtained from the previous formula:
 $$\mathrm{Area_{core}} = \frac{\mathrm{Area_design}}{\mathrm{utilization}} = \frac{581 \mathrm{\mu m}^2}{0.24} \approx 2420.83 \mathrm{\mu m}^2$$
 
-## Exercise 3: Creating a Pareto curve
+## Exercise 3: Creating a Pareto Curve
 Adjust the constraints on a design to observe the impact on power, performance, and area (PPA).
 
-`exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
+`../../exercise3/` provides a simple integer arithmetic logic unit (ALU). The default bitwidth is 12
 and the default clock constraint is 7ns (~143 MHz). These parameters allow for RTL-to-GDS in
 under 1 minute. Run the design with:
 ```
@@ -697,8 +617,9 @@ make DESIGN_CONFIG=../../exercise3/config.mk
 Once complete, observe the final report at `logs/nangate45/alu/base/6_report.json` or
 `logs/nangate45/alu/base/6_report.log`.
 
-Record the power, frequency, and area. Then, open the constraint file with your favorite editor
-and adjust the clock period to 6ns.
+Record the power, frequency, and area. Then, open the constraint file
+([`../../exercise3/constraint.sdc`](exercise3/constraint.sdc)) with your
+favorite editor and adjust the clock period to 6ns.
 
 Clean the design and rerun using the new constraint:
 ```
@@ -706,29 +627,47 @@ make DESIGN_CONFIG=../../exercise3/config.mk clean_all
 make DESIGN_CONFIG=../../exercise3/config.mk
 ```
 
-Record the power, frequency, and area, then repeat for 5ns and 4ns.
+Record the power, frequency, and area, then repeat for 5ns, 4ns, and 3ns.
 
-Once complete, you can plot this data using your favorite software (Google Sheets, Microsoft
-Excel, matplotlib, etc.). Use frequency as the independent variable. Confirm that your data
-matches the reference data at
+Once complete, you can plot this data using your favorite software (Google
+Sheets, Microsoft Excel, matplotlib, etc.). Use max frequency as the independent
+variable. Confirm that your data matches the reference data at
 [`../../exercise3/solution/data.csv`](exercise3/solution/data.csv)
 
-## Exercise 4: Scaling a design across technologies
+## Exercise 4: Scaling a Design Across Technologies
 Observe the differences when a design is implemented in different technologies.
 
-OpenROAD-flow-scripts provides 3 open-source PDKs to implement designs in: SkyWater 130nm,
-Nangate 45nm, and ASAP 7nm. RTL is easily portable across technologies if it does not contain
-technology-specific cells (such as I/O, SRAM, clock-gate cells, etc.).
+OpenROAD-flow-scripts provides 3 open-source PDKs to implement designs in:
+SkyWater 130nm, Nangate 45nm, and ASAP 7nm. RTL is easily portable across
+technologies if it does not contain technology-specific cells (such as I/O pads,
+SRAM, clock-gate cells, etc.).
 
-The `exercise4/` directory contains the same ALU design from exercise 3. However, this time you
-will change the config to alter the target technology. Uncomment one of lines in the config to
-set the target technology, then run the design using
+The `../../exercise4/` directory contains the same ALU design from Exercise 3.
+However, this time you will change the config to alter the target technology.
+Adjust the `PLATFORM` variable in [`../../exercise4/config.mk`](exercise4/config.mk)
+to to one of the technologies (`sky130hd`, `nangate45`, `asap7`). Keep in mind
+that:
+
+* You may need to clean the design data from Exercise 3, because the platform and
+design name (`nangate45/alu`) are reused:
+   ```
+   make DESIGN_CONFIG=../exercise3/config.mk clean_all
+   ```
+* The time units for `sky130hd` and `nangate45` are both in ns, but the units
+for `asap7` are in ps. In order to maintain parity, you will need to adjust
+[`../../exercise4/constraint.sdc`](exercise4/constraint.sdc).
+
+Then, run the design using:
+
 ```
 make DESIGN_CONFIG=../exercise4/config.mk
 ```
-Record the power, frequency, and area for each technology (sky130, nangate45, and asap7).
-You can again graph the data using your favorite graphing software, and also compare your data
-to the reference data at [`../../exercise4/solution/data.csv`](exercise4/solution/data.csv)
+
+Record the power, frequency, and area for each technology. You need not clean
+the design between runs because changing the platform changes the output
+directory. You can again graph the data using your favorite graphing software
+and compare the data to the reference data at
+[`../../exercise4/solution/data.csv`](exercise4/solution/data.csv).
 
 ## Demo 3: Building Complex Designs
 Follow along as the presenter explains how to incorporate macros into your design.
@@ -743,7 +682,7 @@ are often used for several reasons:
 3. I/O pad cells for off-chip power and communication
 4. Fiducial cells required by the manufacturer for fabrication
 5. Intellectual property (IP) provided by a third-party vendor
-6. And more
+6. And more!
 
 ### How can I generate macros?
 * [OpenRAM](https://github.com/VLSIDA/OpenRAM) is an open-source SRAM generator
@@ -752,6 +691,8 @@ are often used for several reasons:
   * Creates a blackbox implementation which is useful for modeling; cannot be used for fabrication
 * Generate a block using OpenROAD 
   * Use OpenROAD to create a hardened macro, then instantiate the block in a parent module
+* Acquire third-party IP
+  * Many commerical vendors provide RAM generators, I/O pad cells, analog macros, and more
 
 `nangate45/tinyRocket` is a CPU core which incorporates SRAM macros generated by bsg_fakeram.
 While OpenROAD-flow-scipts already includes platform files necessary for standard cells, designers
@@ -772,7 +713,7 @@ export ADDITIONAL_LIBS = ./designs/nangate45/tinyRocket/fakeram45_1024x32.lib ./
 Notice however that these RAMs are generated by bsg_fakeram and do not have physical implementation
 files (`.gds`). Normally, this would create an error during the GDS merge step, however the [platform
 configuration for nangate45](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/blob/96a7fc08e8404bec49f9a874589a5d95638707ee/flow/platforms/nangate45/config.mk#L101)
-ignores this by setting `GDS_ALLOW_EMPTY` on these instances:
+downgrades this to a warning by setting `GDS_ALLOW_EMPTY` on these instances:
 ```
 # Allow empty GDS cell
 export GDS_ALLOW_EMPTY = fakeram.*
@@ -793,7 +734,7 @@ Once done, you can see that new steps in the flow were used:
 2. `2_4_mplace.log`: macro place
 
 `tdms_place` performs a rough initial placement of both macros and standard cells. This is used as a
-seed for the macro placer. `2_4_mplace.log` performs macro placement. The placer tries to ensure that
+seed for the macro placer. `mplace` performs macro placement. The placer tries to ensure that
 macros block as little design area as possible while still allowing connectivity to the macro.
 
 Common problems when introducing macros:
@@ -813,7 +754,7 @@ template.
 
 Feel free to use other designs as a reference! Use any platform you want.
 
-## Demo 4: Using OpenLane for the free Skywater 130nm Open MPW Shuttle
+## Demo 4: Using OpenLane for the Free Skywater 130nm Open MPW Shuttle
 Follow along as the presenter explains [OpenLane](https://github.com/The-OpenROAD-Project/OpenLane),
 the [Efabless OpenMPW Program](https://efabless.com/open_shuttle_program), and a [design which was
 just submitted](https://platform.efabless.com/projects/1165).
