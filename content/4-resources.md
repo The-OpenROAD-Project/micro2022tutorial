@@ -17,6 +17,7 @@ nav: Resources
 * [Yosys](https://yosyshq.net/yosys)
 * [OpenROAD](https://theopenroadproject.org)
 * [KLayout](https://www.klayout.de)
+* [Efabless Open MPW Shuttle](https://efabless.com/open_shuttle_program)
 
 ## Other Useful Open-Source EDA Tools
 * [SemiWiki](https://semiwiki.com/wikis/industry-wikis/eda-open-source-tools-wiki)
