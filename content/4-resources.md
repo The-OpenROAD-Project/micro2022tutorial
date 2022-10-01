@@ -21,3 +21,11 @@ nav: Resources
 ## Other Useful Open-Source EDA Tools
 * [SemiWiki](https://semiwiki.com/wikis/industry-wikis/eda-open-source-tools-wiki)
 * [Andreas' list of awesome hardware tools](https://github.com/aolofsson/awesome-hardware-tools)
+
+## Academic Reading
+* [OpenROAD: Toward a Self-Driving, Open-Source Digital Layout Implementation Tool Chain](https://par.nsf.gov/servlets/purl/10171024)
+* [Toward an Open-Source Digital Flow: First Learnings from the OpenROAD Project](https://dl.acm.org/doi/abs/10.1145/3316781.3326334)
+* [Bridging Academic Open-Source EDA to Real-World Usability](https://ieeexplore.ieee.org/abstract/document/9256694)
+* [Open-Source EDA: If We Build It, Who Will Come?](https://ieeexplore.ieee.org/abstract/document/9344073)
+* [The OpenROAD project: Unleashing hardware innovation](https://vlsicad.ucsd.edu/Publications/Conferences/383/c383.pdf)
+* [Leveling Up: A Trajectory of OpenROAD, TILOS and Beyond](https://dl.acm.org/doi/abs/10.1145/3505170.3511479)
