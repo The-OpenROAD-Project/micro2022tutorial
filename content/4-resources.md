@@ -20,3 +20,4 @@ nav: Resources
 
 ## Other Useful Open-Source EDA Tools
 * [SemiWiki](https://semiwiki.com/wikis/industry-wikis/eda-open-source-tools-wiki)
+* [Andreas' list of awesome hardware tools](https://github.com/aolofsson/awesome-hardware-tools)
