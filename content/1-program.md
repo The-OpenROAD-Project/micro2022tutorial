@@ -5,7 +5,7 @@ nav: Program
 
 ## Program
 
-The tutorial will be hosted in the afternoon session on Saturday, October 1, 2022.<br/>
+The tutorial was hosted in the afternoon session on Saturday, October 1, 2022.<br/>
 *All times are listed in CDT*.
 
 **Demo**: the presenter demonstrates and the attendees follow along.<br/>
