@@ -12,6 +12,8 @@ The tutorial will be hosted in the afternoon session on Saturday, October 1, 202
 **Exercise**: attendees run experiments or solve problems. Organizers will
 circulate to help and answer questions.
 
+Presentation slides are available [here](../assets/openroad_tutorial_slides_micro2022.pdf).
+
 | Time    | Topic                                                       | Presenter |
 |---------|-------------------------------------------------------------|-----------|
 | 1:00 PM | Welcome, Introduction, and Tool Setup                       | Tutu      |
